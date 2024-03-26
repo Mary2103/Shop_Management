@@ -1,22 +1,23 @@
-﻿@{
+﻿@model SV20T1020285.DomainModels.Product
+@{
     ViewBag.Title = "Xóa mặt hàng";
 }
 
 <div class="box box-danger">
 
     <div class="box-body">
-        <form class="form-horizontal" action="#" method="post">
+        <form class="form-horizontal" action="~/Product/Delete/@Model.ProductID" method="post">
             <div class="form-group">
                 <label class="control-label col-sm-2">Tên mặt hàng:</label>
                 <div class="col-sm-10">
-                    <p class="form-control-static">Macbook Pro 15'' M2 2023</p>
+                    <p class="form-control-static">@Model.ProductName</p>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2">Mô tả:</label>
                 <div class="col-sm-10">
-                    <p class="form-control-static">Nhiều tính năng, bền, mỏng, nhẹ</p>
+                    <p class="form-control-static">@Model.ProductDescription</p>
                 </div>
             </div>
 
@@ -25,28 +26,31 @@
             <div class="form-group">
                 <label class="control-label col-sm-2">Đơn vị tính:</label>
                 <div class="col-sm-10">
-                    <p class="form-control-static">Cái<p>
+                    <p class="form-control-static">@Model.Unit<p>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-sm-2">Giá hàng:</label>
                 <div class="col-sm-10">
-                    <p class="form-control-static">45,000,000</p>
+                    <p class="form-control-static">@Model.Price.ToString("N0")</p>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-lg-offset-2 col-sm-10">
-                    <img id="Photo" src="~/images/products/macbook_pro.png" class="img img-bordered" style="width:200px" />
+                    <img id="Photo" src="~/images/products/@Model.Photo" class="img img-bordered" style="width:200px" />
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-danger">
-                        <i class="fa fa-trash"></i> Xác nhận xóa
-                    </button>
+                    @if (!SV20T1020285.BusinessLayers.ProductDataService.IsUsedProduct(Model.ProductID))
+                    {
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa fa-trash"></i> Xác nhận xóa
+                        </button>
+                    }
                     <a class="btn btn-default" href="~/Product">
                         Quay lại
                     </a>

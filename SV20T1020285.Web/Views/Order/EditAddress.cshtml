@@ -1,0 +1,89 @@
+﻿@model SV20T1020285.DomainModels.Order
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+
+        <form id="formEditAdress" action="~/Order/EditAddress" method="post" class="form-horizontal">
+            <input type="hidden" name="@nameof(Model.OrderID)" value="@Model.OrderID" />
+
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Cập nhật thông tin nơi giao hàng</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Tỉnh/thành:</label>
+                    <div class="col-sm-9">
+                        @* <select class="form-control" name="deliveryProvince">
+                            <option value="">-- Chọn tỉnh/thành --</option>
+                            @foreach (var item in SV20T1020285.BusinessLayers.CommonDataService.ListOfProvinces())
+                            {
+                                <option value="@item.ProvinceName">@item.ProvinceName</option>
+                            }
+                        </select> *@
+                        @Html.DropDownListFor(m => m.DeliveryProvince, SelectListHelper.Provinces(), new { @class = "form-control" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Địa chỉ giao hàng:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="deliveryAddress" value="@Model.DeliveryAddress" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-sm-9">
+                        <span id="message" style="color:#f00"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-floppy-o"></i> Cập nhật
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Bỏ qua
+                </button>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#formEditAdress').submit(function (e) {
+                e.preventDefault();
+                var url = $(this).prop("action");
+                var method = $(this).prop("method");
+                var postData = $(this).serializeArray();
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: postData,
+                    error: function () {
+                        alert("Your request is not valid");
+                    },
+                    success: function (data) {
+                        if (data !== "") {
+                            $("#message").html(data);
+
+                        }
+                        else {
+                            location.reload();
+                        }
+                    }
+
+                });
+                return;
+            });
+        });
+    </script>
+
+

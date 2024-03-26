@@ -35,7 +35,7 @@ namespace SV20T1020285.Web
             List<SelectListItem> list = new List<SelectListItem>();
             list.Add(new SelectListItem()
             {
-                Value = "",
+                Value = "0",
                 Text = "-- Chọn loại hàng --"
             }); ;
             foreach (var item in CommonDataService.ListOfCategories())
@@ -53,7 +53,7 @@ namespace SV20T1020285.Web
             List<SelectListItem> list = new List<SelectListItem>();
             list.Add(new SelectListItem()
             {
-                Value = "",
+                Value = "0",
                 Text = "-- Chọn nhà cung cấp --"
             }); ;
             foreach (var item in CommonDataService.ListOfSuppliers())

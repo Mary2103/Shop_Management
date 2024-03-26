@@ -54,7 +54,8 @@ namespace SV20T1020285.Web.Controllers
             ViewBag.Title = CREATE_TITLE;
             var model = new Customer()
             {
-                CustomerID = 0
+                CustomerID = 0,
+                IsLocked = false
             };
             return View("Edit",model);
         }

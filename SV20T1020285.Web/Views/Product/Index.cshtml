@@ -10,12 +10,39 @@
             <div class="container-fluid row">
                 <input type="hidden" name="@nameof(Model.PageSize)" value="@Model.PageSize" />
 
-                <div class="col-sm-3">
-                    @Html.DropDownListFor(m => m.CategoryID, SelectListHelper.Categories(), new { @class = "form-control" })
-                </div>
 
                 <div class="col-sm-3">
-                    @Html.DropDownListFor(m => m.SupplierID, SelectListHelper.Suppliers(), new { @class="form-control"})
+                    <select class="form-control" name="@nameof(Model.CategoryID)">
+                        @foreach (var item in SelectListHelper.Categories())
+                        {
+                            if (item.Value == Model.CategoryID.ToString())
+                            {
+                                <option value="@item.Value" selected>@item.Text</option>
+                            }
+                            else
+                            {
+
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+                
+                <div class="col-sm-3">
+                    <select class="form-control" name="@nameof(Model.SupplierID)">
+                        @foreach (var item in SelectListHelper.Suppliers())
+                        {
+                            if (item.Value == Model.SupplierID.ToString())
+                            {
+                                <option value="@item.Value" selected>@item.Text</option>
+                            }
+                            else
+                            {
+
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        }
+                    </select>
                 </div>
 
                 <div class="col-sm-6 input-group">

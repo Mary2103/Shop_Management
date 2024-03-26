@@ -34,7 +34,12 @@
                         <td>@item.Email</td>
                         <td>@item.Address</td>
                         <td>@item.Province</td>
-                        <td></td>
+                        <td class="text-center">
+                            @if (item.IsLocked)
+                            {
+                                <i class="fa fa-remove"></i>
+                            }
+                        </td>
                         <td class="text-right">
                             <a href="~/Customer/Edit/@item.CustomerID" class="btn btn-xs btn-info">
                                 <i class="fa fa-edit"></i>
@@ -50,19 +55,22 @@
         </table>
     </div>
 
-    <div class="text-center">
-        <ul class="pagination">
-            @for (int p = 1; p <= Model.PageCount; p++)
-            {
-                if (Model.Page == p)
+    @if (Model.PageCount > 1)
+    {
+        <div class="text-center">
+            <ul class="pagination">
+                @for (int p = 1; p <= Model.PageCount; p++)
                 {
-                    <li class="active"><a href="#">@p</a></li>
+                    if (Model.Page == p)
+                    {
+                        <li class="active"><a href="#">@p</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="javascript:;" onclick="doSearch('#formSearch',@p)">@p</a></li>
+                    }
                 }
-                else
-                {
-                    <li><a href="javascript:;" onclick="doSearch('#formSearch',@p)">@p</a></li>
-                }
-            }
-        </ul>
-    </div>
+            </ul>
+        </div>
+    }
 </div>

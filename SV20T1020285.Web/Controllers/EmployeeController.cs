@@ -11,7 +11,7 @@ namespace SV20T1020285.Web.Controllers
     [Authorize(Roles = $"{WebUserRoles.Administrator}")]
     public class EmployeeController : Controller
     {
-        const int PAGE_SIZE = 20;
+        const int PAGE_SIZE = 21;
         const string CREATE_TITLE = "Bổ sung nhân viên";
         const string EMPLOYEE_SEARCH = "employee_search";
         public IActionResult Index()
@@ -99,7 +99,7 @@ namespace SV20T1020285.Web.Controllers
                 // tên file sẽ lưu trên server
                 string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}";
                 //Đường dẫn vật lý đến file sẽ lưu trên server (vd: D
-                string filePath = Path.Combine(ApplicationContext.HostEnviroment.WebRootPath,@"images\employees", fileName);
+                string filePath = Path.Combine(ApplicationContext.HostEnviroment.WebRootPath, @"images\employees", fileName);
 
                 //Lưu file trên server
                 using (var stream = new FileStream(filePath, FileMode.Create))

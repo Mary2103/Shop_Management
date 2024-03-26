@@ -1,6 +1,7 @@
 ﻿using SV20T1020285.DataLayers;
 using SV20T1020285.DataLayers.SQLServer;
 using SV20T1020285.DomainModels;
+using System.Buffers;
 
 
 namespace SV20T1020285.BusinessLayers
@@ -18,7 +19,7 @@ namespace SV20T1020285.BusinessLayers
         private static readonly ICommonDAL<Employee> employeeDB;
         private static readonly ICommonDAL<Shipper> shipperDB;
 
-      
+       
         /// <summary>
         /// Constructor (câu hỏi: static constructor hoạt động ntn? cách viết?)
         /// </summary>
@@ -39,9 +40,9 @@ namespace SV20T1020285.BusinessLayers
         /// <returns></returns>
         public static List<Province> ListOfProvinces()
         {
-            return provinceDB.List().ToList();  
+            return provinceDB.List().ToList();
         }
-        
+
         /// <summary>
         /// Tìm kiếm và lấy danh sách khách hàng
         /// </summary>
@@ -60,8 +61,12 @@ namespace SV20T1020285.BusinessLayers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        public static List<Customer> ListOfCustomers()
+        {
+            return customerDB.List().ToList();
+        }
         public static Customer? GetCustomer(int id)
-        { 
+        {
             return customerDB.Get(id);
         }
         /// <summary>
@@ -88,7 +93,7 @@ namespace SV20T1020285.BusinessLayers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static bool DeleteCustomer(int id) 
+        public static bool DeleteCustomer(int id)
         {
             if (customerDB.IsUsed(id))
                 return false;
@@ -100,7 +105,7 @@ namespace SV20T1020285.BusinessLayers
         /// <param name="id"></param>
         /// <returns></returns>
         public static bool IsUsedCustomer(int id)
-        { 
+        {
             return customerDB.IsUsed(id);
         }
         /// <summary>
@@ -118,7 +123,7 @@ namespace SV20T1020285.BusinessLayers
         }
         public static List<Supplier> ListOfSuppliers(string searchValue = "")
         {
-            return supplierDB.List(1,0,searchValue).ToList();
+            return supplierDB.List(1, 0, searchValue).ToList();
         }
         /// <summary>
         /// Lấy thông tin nhà cung cấp theo id
@@ -126,7 +131,7 @@ namespace SV20T1020285.BusinessLayers
         /// <param name="id"></param>
         /// <returns></returns>
         public static Supplier? GetSupplier(int id)
-        { 
+        {
             return supplierDB.Get(id);
         }
         /// <summary>
@@ -135,15 +140,15 @@ namespace SV20T1020285.BusinessLayers
         /// <param name="data"></param>
         /// <returns></returns>
         public static int AddSupplier(Supplier data)
-        { 
-            return supplierDB.Add(data); 
+        {
+            return supplierDB.Add(data);
         }
         /// <summary>
         /// Cập nhật thông tin nhà cung cấp
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static bool UpdateSupplier(Supplier data) 
+        public static bool UpdateSupplier(Supplier data)
         {
             return supplierDB.Update(data);
         }
@@ -152,9 +157,9 @@ namespace SV20T1020285.BusinessLayers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static bool DeleteSupplier(int id) 
-        {  
-            return supplierDB.Delete(id); 
+        public static bool DeleteSupplier(int id)
+        {
+            return supplierDB.Delete(id);
         }
         /// <summary>
         /// Kiểm tra xem nhà cung cấp có mã id hiện có dữ liệu liên quan hay không
@@ -179,7 +184,16 @@ namespace SV20T1020285.BusinessLayers
             rowCount = shipperDB.Count(searchValue);
             return shipperDB.List(page, pageSize, searchValue).ToList();
         }
-       
+
+        /// <summary>
+        /// Lấy danh sách người giao hàng
+        /// </summary>
+        /// <returns></returns>
+        public static List<Shipper> ListOfShippers()
+        {
+            return shipperDB.List().ToList();
+        }
+
         /// <summary>
         /// Lấy thông tin của người giao hàng theo id
         /// </summary>
@@ -310,7 +324,7 @@ namespace SV20T1020285.BusinessLayers
         /// <returns></returns>
         public static List<Category> ListOfCategories(string searchValue = "")
         {
-            return categoryDB.List(1,0,searchValue).ToList();
+            return categoryDB.List(1, 0, searchValue).ToList();
         }
         /// <summary>
         /// Lấy thông tin của loại hàng theo id

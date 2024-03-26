@@ -41,38 +41,17 @@
 
             <div class="form-group">
                 <label>Tỉnh/thành:</label>
-                @* <select class="form-control" name="Province">
-                    <option value="">-- Chọn tỉnh/thành --</option>
-                    @foreach (var item in SV20T1020285.BusinessLayers.CommonDataService.ListOfProvinces())
-                    {
-                        if(item.ProvinceName == Model.Province)
-                        {
-                            <option value="@item.ProvinceName" selected>@item.ProvinceName</option>
-                        }
-                        else
-                        {
-                            <option value="@item.ProvinceName">@item.ProvinceName</option>
-                        }
-                    }
-                </select> *@
                 @Html.DropDownListFor(m => m.Province, SelectListHelper.Provinces(), new {@class="form-control"})
                 @Html.ValidationMessage(nameof(Model.Province), new { @style = "color:#f00" })
             </div>
 
             <div class="form-group">
-                <label>Tình trạng tài khoản:</label>
-                <select class="form-control" name="IsLocked">
-                    @if(Model.IsLocked)
-                    {
-                        <option value="false">Tài khoản không bị khóa</option>
-                        <option value="true" selected>Tài khoản bị khóa</option>
-                    }
-                    else
-                    {
-                        <option value="false" selected>Tài khoản không bị khóa</option>
-                        <option value="true">Tài khoản bị khóa</option>
-                    }
-                </select>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBox("IsLocked", Model.IsLocked, new { id = "IsSelling" })
+                            Tài khoản bị khóa
+                        </label>
+                    </div>
             </div>
 
             <div class="form-group">

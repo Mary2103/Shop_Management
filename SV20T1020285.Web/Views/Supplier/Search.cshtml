@@ -15,6 +15,7 @@
                 <tr class="bg-primary">
                     <th>Tên nhà cung cấp</th>
                     <th>Tên giao dịch</th>
+                    <th>Ngày thành lập</th>
                     <th>Điện thoại</th>
                     <th>Email</th>
                     <th>Địa chỉ</th>
@@ -29,6 +30,7 @@
                     <tr>
                         <td>@item.SupplierName</td>
                         <td>@item.ContactName</td>
+                        <td>@item.OpenDay.ToString("dd/MM/yyyy", new System.Globalization.CultureInfo("en-GB"))</td>
                         <td>@item.Phone</td>
                         <td>@item.Email</td>
                         <td>@item.Address</td>

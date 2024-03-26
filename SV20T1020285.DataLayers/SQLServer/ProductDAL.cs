@@ -75,8 +75,7 @@ namespace SV20T1020285.DataLayers.SQLServer
             long id = 0;
             using( var connection = OpenConnection())
             {
-                var sql = @"if not exists (select ProductID from Products where Product
-                            select -1;
+                var sql = @"
                             begin
                                  insert into ProductPhotos(ProductID,Photo,Description,DisplayOrder,IsHidden)
                                  values(@ProductID,@Photo,@Description,@DisplayOrder,@IsHidden)
@@ -107,7 +106,7 @@ namespace SV20T1020285.DataLayers.SQLServer
             using (var connection = OpenConnection())
             {
                 var sql = @"select count(*) from Products
-                            where (@searchValue = N'') or (ProductName like @searchValue)
+                            where (@searchValue = N'' or ProductName like @searchValue)
                                 and (@CategoryID = 0 or CategoryID = @CategoryID)
                                 and (@SupplierID = 0 or SupplierId = @SupplierID)";
                 var parameters = new
@@ -127,7 +126,9 @@ namespace SV20T1020285.DataLayers.SQLServer
             bool result = false;
             using (var connection = OpenConnection())
             {
-                var sql = @"delete from Products where ProductID = @ProductID";
+                var sql = @" delete from Products where ProductID = @ProductID; 
+                             delete from ProductAttributes where ProductID = @ProductID;
+                             delete from ProductPhotos where ProductID = @ProductID;";
                 var parameters = new
                 {
                     ProductID = productID
@@ -231,10 +232,6 @@ namespace SV20T1020285.DataLayers.SQLServer
             {
                 var sql = @"if exists(select * from OrderDetails where ProductID = @ProductID)
                                 select 1
-                            else if exists(select * from ProductAttributes where ProductID = @ProductID)
-                                select 1
-                            else if exists(select * from ProductPhotos where ProductID = @ProductID)
-                                select 1
                             else 
                                 select 0";
                 var parameters = new
@@ -322,7 +319,7 @@ namespace SV20T1020285.DataLayers.SQLServer
                                      Unit = @Unit,
                                      Price = @Price,
                                      Photo = @Photo,
-                                     IsSelling = IsSelling
+                                     IsSelling = @IsSelling
                                   
                                  where ProductID = @ProductID
                             end";
@@ -356,9 +353,11 @@ namespace SV20T1020285.DataLayers.SQLServer
                                      AttributeName = @AttributeName,
                                      AttributeValue = @AttributeValue   ,
                                      DisplayOrder = @DisplayOrder
+                                  where AttributeID = @AttributeID
                             end";
                 var parameters = new
                 {
+                    AttributeID = data.AttributeID,
                     ProductID = data.ProductID,
                     AttributeName = data.AttributeName ?? "",
                     AttributeValue = data.AttributeValue ?? "",
@@ -383,9 +382,11 @@ namespace SV20T1020285.DataLayers.SQLServer
                                      Description = @Description,
                                      DisplayOrder = @DisplayOrder,
                                      IsHidden = @IsHidden
+                                 where PhotoID = @PhotoID
                             end";
                 var parameters = new
                 {
+                    PhotoID = data.PhotoID,
                     ProductID = data.ProductID,
                     Photo = data.Photo ?? "",
                     Description = data.Description ?? "",

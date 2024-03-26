@@ -17,9 +17,9 @@ namespace SV20T1020285.BusinessLayers
         /// </summary>
         /// <param name="searchValue"></param>
         /// <returns></returns>
-        public static List<Product> ListProducts(string searchValue = "", int categoryID = 0, int supplierID = 0)
+        public static List<Product> ListProducts(string searchValue = "")
         {
-            return productDB.List(1,0,searchValue,categoryID,supplierID).ToList();
+            return productDB.List().ToList();
         }
 
         /// <summary>
@@ -31,13 +31,12 @@ namespace SV20T1020285.BusinessLayers
         /// <param name="searchValue"></param>
         /// <param name="categoryId"></param>
         /// <param name="supplierId"></param>
-        /// <param name="minPrice"></param>
-        /// <param name="maxPrice"></param>
+        ///
         /// <returns></returns>
         public static List<Product> ListProducts(out int rowCount, int page = 1, int pageSize = 0,
                                                 string searchValue = "", int categoryId = 0, int supplierId = 0)
         {
-            rowCount = productDB.Count(searchValue);
+            rowCount = productDB.Count(searchValue, categoryId, supplierId);
             return productDB.List(page, pageSize, searchValue, categoryId, supplierId).ToList();
         }
 

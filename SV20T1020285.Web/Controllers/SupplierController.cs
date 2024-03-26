@@ -50,7 +50,8 @@ namespace SV20T1020285.Web.Controllers
             ViewBag.Title = "Bổ sung nhà cung cấp";
             var model = new Supplier()
             {
-                SupplierID = 0
+                SupplierID = 0,
+                OpenDay = DateTime.Now
             };
             return View("Edit", model);
         }
@@ -64,7 +65,7 @@ namespace SV20T1020285.Web.Controllers
             return View(model);
         }
         [HttpPost]//Attribute, action dưới chỉ nhận dữ liệu gửi lên dưới dạng post
-        public IActionResult Save(Supplier model)
+        public IActionResult Save(Supplier model, string openDayInput = "")
         {
             if (string.IsNullOrWhiteSpace(model.SupplierName))
                 ModelState.AddModelError(nameof(model.SupplierName), "Tên không được để trống");
@@ -83,6 +84,11 @@ namespace SV20T1020285.Web.Controllers
                 ViewBag.Title = model.SupplierID == 0 ? CREATE_TITLE : "Cập nhật thông tin nhà cung cấp";
                 return View("Edit", model);
             }
+
+            DateTime? d = openDayInput.ToDateTime();
+            if (d.HasValue)
+                model.OpenDay = d.Value;
+
             if (model.SupplierID == 0)
             {
                 int id = CommonDataService.AddSupplier(model);

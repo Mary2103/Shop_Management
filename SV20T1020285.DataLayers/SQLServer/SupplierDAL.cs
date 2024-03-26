@@ -20,8 +20,8 @@ namespace SV20T1020285.DataLayers.SQLServer
                                 select -1;
                             else
                                 begin
-                                    insert into Suppliers(SupplierName,ContactName,Province,Address,Phone,Email)
-                                    values(@SupplierName,@ContactName,@Province,@Address,@Phone,@Email)
+                                    insert into Suppliers(SupplierName,ContactName,Province,Address,Phone,Email,OpenDay)
+                                    values(@SupplierName,@ContactName,@Province,@Address,@Phone,@Email,@OpenDay)
                                 
                                     select @@identity;
                                 end";
@@ -32,7 +32,8 @@ namespace SV20T1020285.DataLayers.SQLServer
                     Province = data.Province ?? "",
                     Address = data.Address ?? "",
                     Phone = data.Phone ?? "",
-                    Email = data.Email ?? ""
+                    Email = data.Email ?? "",
+                    OpenDay = data.OpenDay
                 };
                 //thuc thi
                 id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: CommandType.Text);
@@ -157,7 +158,8 @@ namespace SV20T1020285.DataLayers.SQLServer
                                     Province = @province,
                                     Address = @address,
                                     Phone = @phone,
-                                    Email = @email
+                                    Email = @email,
+                                    OpenDay = @openday
                                 where SupplierID = @SupplierID
                                end";
                 var parameters = new
@@ -169,6 +171,7 @@ namespace SV20T1020285.DataLayers.SQLServer
                     Address = data.Address ?? "",
                     Phone = data.Phone ?? "",
                     Email = data.Email ?? "",
+                    OpenDay = data.OpenDay
                 };
                 //thucthi
                 result = connection.Execute(sql: sql, param: parameters, commandType: CommandType.Text) > 0;

@@ -16,7 +16,7 @@ namespace SV20T1020285.DomainModels
         public string ContactName { get; set; } = "";
         public string Province { get; set; } = "";
         public string Address { get; set; } = "";
-        public string Phone { get; set; } = "";
+        public string Phone { get; set; } = ""; 
         public string Email { get; set; } = "";
         public bool IsLocked { get; set; }
 

@@ -16,6 +16,10 @@
             </div>
 
             <div class="form-group">
+                <label>Ngày thành lập:</label>
+                <p class="form-control-static">@Model.OpenDay.ToString("dd/MM/yyyy", new System.Globalization.CultureInfo("en-GB"))</p>
+            </div>
+            <div class="form-group">
                 <label>Điện thoại:</label>
                 <p class="form-control-static">@Model.Phone</p>
             </div>
